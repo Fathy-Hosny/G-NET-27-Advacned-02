@@ -53,29 +53,47 @@ namespace Assignment02_Advanced
 
         #endregion
 
-
-
         #region Task02_2.2Transform Products 
 
-        public static List<string> TransformProducts(List<Product> products, Func<Product, String> TransformFunc)
+        //public static List<string> TransformProducts(List<Product> products, Func<Product, String> TransformFunc)
+        //{
+        //    var result = new List<string>();    
+
+        //    foreach (var product in products)
+
+        //    {
+
+        //        result.Add(TransformFunc(product));
+        //    }
+
+        //    return result;
+
+
+        //}
+
+        #endregion
+
+        #region Task02_2.3Filter Products
+        public static List<Product> FilterProducts(List<Product> products, Predicate<Product> filter)
         {
-            var result = new List<string>();    
+            List<Product> result = new List<Product>();
 
             foreach (var product in products)
-
             {
-               
-                result.Add(TransformFunc(product));
+                if (filter(product))
+                {
+                    result.Add(product);
+                }
             }
 
             return result;
-
-
         }
 
+      
         #endregion
         static void Main(string[] args)
         {
+            #region List_of_Products
             List<Product> catalog = new()
                 {
                     new Product { Id=1, Name="Laptop", Category="Electronics", Price=1200, Stock=10 },
@@ -89,6 +107,8 @@ namespace Assignment02_Advanced
                     new Product { Id=9, Name="Headphones", Category="Electronics", Price=150, Stock=40 },
                     new Product { Id=10, Name="Jacket", Category="Clothing", Price=120, Stock=15 }
                 };
+
+            #endregion
 
             #region Task01
 
@@ -126,26 +146,40 @@ namespace Assignment02_Advanced
 
             #region Task02_2.2Transform Products 
 
-            Console.WriteLine("--- Summary List ---");
+            //Console.WriteLine("--- Summary List ---");
 
-            List<String> Summarys = TransformProducts(catalog, p => $"{p.Name}(${p.Price})");
+            //List<String> Summarys = TransformProducts(catalog, p => $"{p.Name}(${p.Price})");
 
-            foreach (var summary in Summarys)
-            {
-                Console.WriteLine(summary);
-            }
+            //foreach (var summary in Summarys)
+            //{
+            //    Console.WriteLine(summary);
+            //}
 
-            Console.WriteLine("\n--- Price Labels ---");
+            //Console.WriteLine("\n--- Price Labels ---");
 
-            List<String> Labels = TransformProducts(catalog, p => $"{p.Name}:{(p.Price >100? "Expensive!" : "Affordable")}");
+            //List<String> Labels = TransformProducts(catalog, p => $"{p.Name}:{(p.Price >100? "Expensive!" : "Affordable")}");
 
-            foreach (var Label in Labels)
-            {
-                Console.WriteLine(Label);
-            }
+            //foreach (var Label in Labels)
+            //{
+            //    Console.WriteLine(Label);
+            //}
 
             #endregion
 
+            #region Task02_2.3Filter Products
+            Console.WriteLine("--LOW-STOCK ALERTS--");
+
+     
+            List<Product> lowStockItems = FilterProducts(catalog, p => p.Stock < 20);
+
+         
+            foreach (var p in lowStockItems)
+            {
+                Console.WriteLine($"[LOW STOCK] {p.Name}: only {p.Stock} left!");
+            }
+
+            Console.WriteLine("--------------------");
+            #endregion
 
         }
 
