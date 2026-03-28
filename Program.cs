@@ -39,17 +39,39 @@ namespace Assignment02_Advanced
         //}
         #endregion
 
-        #region task02
+        #region task02_2.1Print Reports 
         //I used Action delegate because i want to print the report and i dont need to return any value from the method
-        public static void PrintReport(List<Product> products, Action<Product> PrintAction)
+        //public static void PrintReport(List<Product> products, Action<Product> PrintAction)
+        //{
+        //    foreach (var product in products)
+        //    {
+        //        PrintAction(product);
+        //    }
+        //}
+
+
+
+        #endregion
+
+
+
+        #region Task02_2.2Transform Products 
+
+        public static List<string> TransformProducts(List<Product> products, Func<Product, String> TransformFunc)
         {
+            var result = new List<string>();    
+
             foreach (var product in products)
+
             {
-                PrintAction(product);
+               
+                result.Add(TransformFunc(product));
             }
+
+            return result;
+
+
         }
-
-
 
         #endregion
         static void Main(string[] args)
@@ -86,19 +108,41 @@ namespace Assignment02_Advanced
 
             #endregion
 
-            #region Task02
+            #region Task02_2.1Print Reports 
 
-            Console.WriteLine("--- SHORT REPORT ---");
+            //Console.WriteLine("--- SHORT REPORT ---");
 
-            PrintReport(catalog, p => Console.WriteLine($"{p.Name}- ${p.Price}"));
+            //PrintReport(catalog, p => Console.WriteLine($"{p.Name}- ${p.Price}"));
 
-            Console.WriteLine("--------------------");
+            //Console.WriteLine("--------------------");
 
-            Console.WriteLine("\n--- DETAILED REPORT ---");
+            //Console.WriteLine("\n--- DETAILED REPORT ---");
 
-            PrintReport(catalog, p => Console.WriteLine($"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}") );
+            //PrintReport(catalog, p => Console.WriteLine($"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}") );
 
-            Console.WriteLine("-----------------------");
+            //Console.WriteLine("-----------------------");
+
+            #endregion
+
+            #region Task02_2.2Transform Products 
+
+            Console.WriteLine("--- Summary List ---");
+
+            List<String> Summarys = TransformProducts(catalog, p => $"{p.Name}(${p.Price})");
+
+            foreach (var summary in Summarys)
+            {
+                Console.WriteLine(summary);
+            }
+
+            Console.WriteLine("\n--- Price Labels ---");
+
+            List<String> Labels = TransformProducts(catalog, p => $"{p.Name}:{(p.Price >100? "Expensive!" : "Affordable")}");
+
+            foreach (var Label in Labels)
+            {
+                Console.WriteLine(Label);
+            }
 
             #endregion
 
