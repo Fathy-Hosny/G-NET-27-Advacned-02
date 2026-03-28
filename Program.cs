@@ -5,36 +5,53 @@ namespace Assignment02_Advanced
 {
     internal class Program
     {
-        public static List<Product> SearchProducts(List<Product> products, Func<Product, bool> filter)
-        {
-            List<Product> result = new List<Product>();
+        #region task01 
+        //public static List<Product> SearchProducts(List<Product> products, Func<Product, bool> filter)
+        //{
+        //    List<Product> result = new List<Product>();
 
+        //    foreach (var product in products)
+        //    {
+        //        if (filter(product))
+        //        {
+        //            result.Add(product);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
+        //public static void PrintProducts(string title, List<Product> products)
+        //{
+        //    Console.WriteLine("------------------------------------------------------------");
+
+        //    Console.WriteLine($"---{title}---");
+
+        //    Console.WriteLine("------------------------------------------------------------");
+
+        //    foreach (var p in products)
+        //    {
+
+        //        Console.WriteLine($" {p.Name}--{p.Price:c} (Stock: {p.Stock})");
+        //    }
+
+        //    Console.WriteLine("------------------------------------------------------------");
+        //}
+        #endregion
+
+        #region task02
+        //I used Action delegate because i want to print the report and i dont need to return any value from the method
+        public static void PrintReport(List<Product> products, Action<Product> PrintAction)
+        {
             foreach (var product in products)
             {
-                if (filter(product))
-                {
-                    result.Add(product);
-                }
+                PrintAction(product);
             }
-
-            return result;
         }
-        public static void PrintProducts(string title, List<Product> products)
-        {
-            Console.WriteLine("------------------------------------------------------------");
 
-            Console.WriteLine($"---{title}---");
-         
-            Console.WriteLine("------------------------------------------------------------");
 
-            foreach (var p in products)
-            {
-            
-                Console.WriteLine($" {p.Name}--{p.Price:c} (Stock: {p.Stock})");
-            }
 
-            Console.WriteLine("------------------------------------------------------------");
-        }
+        #endregion
         static void Main(string[] args)
         {
             List<Product> catalog = new()
@@ -53,20 +70,39 @@ namespace Assignment02_Advanced
 
             #region Task01
 
-            var Electronics = SearchProducts(catalog, p => p.Category == "Electronics");
-            PrintProducts("ELECTRONICS", Electronics);
+            //var Electronics = SearchProducts(catalog, p => p.Category == "Electronics");
+            //PrintProducts("ELECTRONICS", Electronics);
 
-           
-            var CheapProducts = SearchProducts(catalog, p => p.Price < 50);
-            PrintProducts("Under $50", CheapProducts);
 
-            var AvailableProducts = SearchProducts(catalog, p => p.Stock > 0);
-            PrintProducts("IN STOCK", AvailableProducts);
+            //var CheapProducts = SearchProducts(catalog, p => p.Price < 50);
+            //PrintProducts("Under $50", CheapProducts);
 
-          
-            var AffordableClothing = SearchProducts(catalog, p => p.Category == "Clothing" && p.Price < 100);
-            PrintProducts("CLOTHING UNDER $100", AffordableClothing);
+            //var AvailableProducts = SearchProducts(catalog, p => p.Stock > 0);
+            //PrintProducts("IN STOCK", AvailableProducts);
+
+
+            //var AffordableClothing = SearchProducts(catalog, p => p.Category == "Clothing" && p.Price < 100);
+            //PrintProducts("CLOTHING UNDER $100", AffordableClothing);
+
             #endregion
+
+            #region Task02
+
+            Console.WriteLine("--- SHORT REPORT ---");
+
+            PrintReport(catalog, p => Console.WriteLine($"{p.Name}- ${p.Price}"));
+
+            Console.WriteLine("--------------------");
+
+            Console.WriteLine("\n--- DETAILED REPORT ---");
+
+            PrintReport(catalog, p => Console.WriteLine($"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}") );
+
+            Console.WriteLine("-----------------------");
+
+            #endregion
+
+
         }
 
     }
